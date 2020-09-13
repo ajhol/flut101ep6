@@ -39,6 +39,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
+// end ep6
 class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
