@@ -14,6 +14,7 @@ class VgaPage extends StatefulWidget {
 class _VgaPageState extends State<VgaPage> {
   List<Vga> vgas = [];
   String sortBy = 'latest'; //
+  BuildContext _scaffoldContext;
   @override
   void initState() {
     // TODO: implement initState
@@ -36,18 +37,18 @@ class _VgaPageState extends State<VgaPage> {
 
   sortAction() {
     setState(() {
-      if (sortBy == 'latest') {
-        sortBy = 'low2high';
+      if (sortBy == 'เรียงลำดับล่าสุด') {
+        sortBy = 'เรียงลำดับจากราคาถูกไปราคาแพง';
         vgas.sort((a, b) {
           return a.vgaPriceAdv - b.vgaPriceAdv;
         });
-      } else if (sortBy == 'low2high') {
-        sortBy = 'high2low';
+      } else if (sortBy == 'เรียงลำดับจากราคาถูกไปราคาแพง') {
+        sortBy = 'เรียงลำดับจากราคาแพงไปราคาถูก';
         vgas.sort((a, b) {
           return b.vgaPriceAdv - a.vgaPriceAdv;
         });
       } else {
-        sortBy = 'latest';
+        sortBy = 'เรียงลำดับล่าสุด';
         vgas.sort((a, b) {
           return b.id - a.id;
         });
@@ -56,8 +57,9 @@ class _VgaPageState extends State<VgaPage> {
   }
 
   showMessage(String txt) {
-    Scaffold.of(context).showSnackBar(SnackBar(
+    Scaffold.of(_scaffoldContext).showSnackBar(SnackBar(
       content: Text(txt),
+      duration: Duration(seconds: 1),
     ));
   }
 
@@ -79,6 +81,7 @@ class _VgaPageState extends State<VgaPage> {
       ),
       body: Builder(
         builder: (context) {
+          _scaffoldContext = context;
           return bodyBuilder();
         },
       ),
