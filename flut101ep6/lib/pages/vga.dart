@@ -77,45 +77,53 @@ class _VgaPageState extends State<VgaPage> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: vgas.length,
-        itemBuilder: (context, i) {
-          var v = vgas[i];
-          return Card(
-            elevation: 0,
-            child: Container(
-              child: InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => VgaDetailPage(),
-                    )),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            "https://www.advice.co.th/pic-pc/vga/${vgas[i].vgaPicture}",
-                        // placeholder: (context, url) => CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Text('${vgas[i].vgaBrand}'),
-                        Text('${vgas[i].vgaModel}'),
-                        Text('${vgas[i].vgaPriceAdv}' + ' บาท'),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
+      body: Builder(
+        builder: (context) {
+          return bodyBuilder();
         },
       ),
+    );
+  }
+
+  ListView bodyBuilder() {
+    return ListView.builder(
+      itemCount: vgas.length,
+      itemBuilder: (context, i) {
+        var v = vgas[i];
+        return Card(
+          elevation: 0,
+          child: Container(
+            child: InkWell(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VgaDetailPage(),
+                  )),
+              child: Row(
+                children: [
+                  Container(
+                    height: 150,
+                    width: 150,
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          "https://www.advice.co.th/pic-pc/vga/${vgas[i].vgaPicture}",
+                      // placeholder: (context, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text('${vgas[i].vgaBrand}'),
+                      Text('${vgas[i].vgaModel}'),
+                      Text('${vgas[i].vgaPriceAdv}' + ' บาท'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
