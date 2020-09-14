@@ -39,20 +39,26 @@ class _VgaPageState extends State<VgaPage> {
       if (sortBy == 'latest') {
         sortBy = 'low2high';
         vgas.sort((a, b) {
-          return b.vgaPriceAdv - a.vgaPriceAdv;
+          return a.vgaPriceAdv - b.vgaPriceAdv;
         });
       } else if (sortBy == 'low2high') {
         sortBy = 'high2low';
         vgas.sort((a, b) {
-          return a.vgaPriceAdv - b.vgaPriceAdv;
+          return b.vgaPriceAdv - a.vgaPriceAdv;
         });
       } else {
         sortBy = 'latest';
         vgas.sort((a, b) {
-          return a.id - b.id;
+          return b.id - a.id;
         });
       }
     });
+  }
+
+  showMessage(String txt) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(txt),
+    ));
   }
 
   @override
@@ -64,39 +70,48 @@ class _VgaPageState extends State<VgaPage> {
           IconButton(
             icon: Icon(Icons.sort),
             tooltip: 'Restitch it',
-            onPressed: () => sortAction(),
+            onPressed: () {
+              sortAction();
+              showMessage(sortBy);
+            },
           ),
         ],
       ),
       body: ListView.builder(
         itemCount: vgas.length,
         itemBuilder: (context, i) {
-          return GestureDetector(
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => VgaDetailPage(),
-                )),
-            child: Row(
-              children: [
-                Container(
-                  height: 150,
-                  width: 150,
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        "https://www.advice.co.th/pic-pc/vga/${vgas[i].vgaPicture}",
-                    // placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  ),
-                ),
-                Column(
+          var v = vgas[i];
+          return Card(
+            elevation: 0,
+            child: Container(
+              child: InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VgaDetailPage(),
+                    )),
+                child: Row(
                   children: [
-                    Text('${vgas[i].vgaBrand}'),
-                    Text('${vgas[i].vgaModel}'),
-                    Text('${vgas[i].vgaPriceAdv}' + ' บาท'),
+                    Container(
+                      height: 150,
+                      width: 150,
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "https://www.advice.co.th/pic-pc/vga/${vgas[i].vgaPicture}",
+                        // placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Text('${vgas[i].vgaBrand}'),
+                        Text('${vgas[i].vgaModel}'),
+                        Text('${vgas[i].vgaPriceAdv}' + ' บาท'),
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           );
         },
