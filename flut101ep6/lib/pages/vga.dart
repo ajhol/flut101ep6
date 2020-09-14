@@ -28,7 +28,7 @@ class _VgaPageState extends State<VgaPage> {
     setState(() {
       jsonString.forEach((v) {
         final vga = Vga.fromJson(v);
-        vgas.add(vga);
+        if (vga.advId != '') vgas.add(vga);
       });
     });
   }
@@ -40,7 +40,7 @@ class _VgaPageState extends State<VgaPage> {
         title: Text('Pc Build'),
       ),
       body: ListView.builder(
-        itemCount: 3,
+        itemCount: vgas.length,
         itemBuilder: (context, i) {
           return GestureDetector(
             onTap: () => Navigator.push(
@@ -55,12 +55,18 @@ class _VgaPageState extends State<VgaPage> {
                   width: 150,
                   child: CachedNetworkImage(
                     imageUrl:
-                        "https://img.advice.co.th/images_nas/pic_product4/A0131871/A0131871_1.jpg",
-                    placeholder: (context, url) => CircularProgressIndicator(),
+                        "https://www.advice.co.th/pic-pc/vga/${vgas[i].vgaPicture}",
+                    // placeholder: (context, url) => CircularProgressIndicator(),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
-                Text('$i'),
+                Column(
+                  children: [
+                    Text('${vgas[i].vgaBrand}'),
+                    Text('${vgas[i].vgaModel}'),
+                    Text('${vgas[i].vgaPriceAdv}'),
+                  ],
+                ),
               ],
             ),
           );
