@@ -38,6 +38,18 @@ class _VgaPageState extends State<VgaPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Pc Build'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.sort),
+              tooltip: 'Restitch it',
+              onPressed: () {
+                setState(() {
+                  vgas.sort((a, b) {
+                    return b.id - a.id;
+                  });
+                });
+              })
+        ],
       ),
       body: ListView.builder(
         itemCount: vgas.length,
