@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flut101ep6/pages/vga_detali.dart';
 import 'package:flutter_cache_store/flutter_cache_store.dart';
+import 'package:flut101ep6/models/vga.dart';
 
 class VgaPage extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class VgaPage extends StatefulWidget {
 }
 
 class _VgaPageState extends State<VgaPage> {
+  List<Vga> vgas = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -20,7 +23,14 @@ class _VgaPageState extends State<VgaPage> {
   loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/vga');
-    print(file.readAsStringSync());
+    final jsonString = json.decode(file.readAsStringSync());
+
+    setState(() {
+      jsonString.forEach((v) {
+        final vga = Vga.fromJson(v);
+        vgas.add(vga);
+      });
+    });
   }
 
   @override
