@@ -39,12 +39,12 @@ class _VgaPageState extends State<VgaPage> {
       if (sortBy == 'latest') {
         sortBy = 'low2high';
         vgas.sort((a, b) {
-          return a.vgaPriceAdv - b.vgaPriceAdv;
+          return b.vgaPriceAdv - a.vgaPriceAdv;
         });
       } else if (sortBy == 'low2high') {
         sortBy = 'high2low';
         vgas.sort((a, b) {
-          return b.vgaPriceAdv - a.vgaPriceAdv;
+          return a.vgaPriceAdv - b.vgaPriceAdv;
         });
       } else {
         sortBy = 'latest';
