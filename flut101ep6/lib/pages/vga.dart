@@ -64,7 +64,7 @@ class _VgaPageState extends State<VgaPage> {
                   children: [
                     Text('${vgas[i].vgaBrand}'),
                     Text('${vgas[i].vgaModel}'),
-                    Text('${vgas[i].vgaPriceAdv}'),
+                    Text('${vgas[i].vgaPriceAdv}' + ' บาท'),
                   ],
                 ),
               ],
