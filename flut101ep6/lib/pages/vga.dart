@@ -13,7 +13,7 @@ class VgaPage extends StatefulWidget {
 
 class _VgaPageState extends State<VgaPage> {
   List<Vga> vgas = [];
-  String sortBy = 'latest'; //
+  String sortBy = 'เรียงลำดับล่าสุด'; //
   BuildContext _scaffoldContext;
   @override
   void initState() {
@@ -30,7 +30,9 @@ class _VgaPageState extends State<VgaPage> {
     setState(() {
       jsonString.forEach((v) {
         final vga = Vga.fromJson(v);
-        if (vga.advId != '') vgas.add(vga);
+        if (vga.advId != '' && vga.vgaPriceAdv != 0) {
+          vgas.add(vga);
+        }
       });
     });
   }
@@ -88,7 +90,7 @@ class _VgaPageState extends State<VgaPage> {
     );
   }
 
-  ListView bodyBuilder() {
+  Widget bodyBuilder() {
     return ListView.builder(
       itemCount: vgas.length,
       itemBuilder: (context, i) {
