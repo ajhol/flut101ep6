@@ -13,6 +13,7 @@ class VgaPage extends StatefulWidget {
 
 class _VgaPageState extends State<VgaPage> {
   List<Vga> vgas = [];
+  String sortBy = 'latest'; //
   @override
   void initState() {
     // TODO: implement initState
@@ -33,6 +34,27 @@ class _VgaPageState extends State<VgaPage> {
     });
   }
 
+  sortAction() {
+    setState(() {
+      if (sortBy == 'latest') {
+        sortBy = 'low2high';
+        vgas.sort((a, b) {
+          return a.vgaPriceAdv - b.vgaPriceAdv;
+        });
+      } else if (sortBy == 'low2high') {
+        sortBy = 'high2low';
+        vgas.sort((a, b) {
+          return b.vgaPriceAdv - a.vgaPriceAdv;
+        });
+      } else {
+        sortBy = 'latest';
+        vgas.sort((a, b) {
+          return a.id - b.id;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,15 +62,10 @@ class _VgaPageState extends State<VgaPage> {
         title: Text('Pc Build'),
         actions: [
           IconButton(
-              icon: Icon(Icons.sort),
-              tooltip: 'Restitch it',
-              onPressed: () {
-                setState(() {
-                  vgas.sort((a, b) {
-                    return b.id - a.id;
-                  });
-                });
-              })
+            icon: Icon(Icons.sort),
+            tooltip: 'Restitch it',
+            onPressed: () => sortAction(),
+          ),
         ],
       ),
       body: ListView.builder(
